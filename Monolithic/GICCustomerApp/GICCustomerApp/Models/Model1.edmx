@@ -1,0 +1,397 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LmsDbMyHclModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CompanyID">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="CompanyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerCode" Type="nvarchar(max)" />
+          <Property Name="CompanyName" Type="nvarchar(max)" />
+          <Property Name="ContactName" Type="nvarchar(max)" />
+          <Property Name="ContactTitle" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="City" Type="nvarchar(max)" />
+          <Property Name="RegionState" Type="nvarchar(max)" />
+          <Property Name="PostalCode" Type="nvarchar(max)" />
+          <Property Name="Country" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="EmployeeMyhcl">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Band" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ManagerID" Type="int" />
+          <Property Name="DateOfJoining" Type="datetime" Nullable="false" />
+          <Property Name="Location" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TotalLeaves" Type="int" />
+          <Property Name="email" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="LMS_Transactions">
+          <Key>
+            <PropertyRef Name="TnsactionID" />
+          </Key>
+          <Property Name="TnsactionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AppliedDate" Type="datetime" Nullable="false" />
+          <Property Name="LeaveType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmpID" Type="int" Nullable="false" />
+          <Property Name="LeaveOnDate" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="varchar" MaxLength="50" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Count" Type="int" />
+        </EntityType>
+        <EntityType Name="ProductCompany">
+          <Key>
+            <PropertyRef Name="ProductCompanyID" />
+          </Key>
+          <Property Name="ProductCompanyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductInfo">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar(max)" />
+          <Property Name="QuantityPerUnit" Type="nvarchar(max)" />
+          <Property Name="UnitPrice" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UsersInfo">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UserEmailID" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ProductCompany_CompanyID">
+          <End Role="CompanyID" Type="Self.CompanyID" Multiplicity="1" />
+          <End Role="ProductCompany" Type="Self.ProductCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyID">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="ProductCompany">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCompany_ProductInfo">
+          <End Role="ProductInfo" Type="Self.ProductInfo" Multiplicity="1" />
+          <End Role="ProductCompany" Type="Self.ProductCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductInfo">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ProductCompany">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersInfo_CompanyID">
+          <End Role="CompanyID" Type="Self.CompanyID" Multiplicity="1" />
+          <End Role="UsersInfo" Type="Self.UsersInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyID">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="UsersInfo">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LmsDbMyHclModelStoreContainer">
+          <EntitySet Name="CompanyID" EntityType="Self.CompanyID" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeMyhcl" EntityType="Self.EmployeeMyhcl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LMS_Transactions" EntityType="Self.LMS_Transactions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCompany" EntityType="Self.ProductCompany" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductInfo" EntityType="Self.ProductInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersInfo" EntityType="Self.UsersInfo" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ProductCompany_CompanyID" Association="Self.FK_ProductCompany_CompanyID">
+            <End Role="CompanyID" EntitySet="CompanyID" />
+            <End Role="ProductCompany" EntitySet="ProductCompany" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCompany_ProductInfo" Association="Self.FK_ProductCompany_ProductInfo">
+            <End Role="ProductInfo" EntitySet="ProductInfo" />
+            <End Role="ProductCompany" EntitySet="ProductCompany" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersInfo_CompanyID" Association="Self.FK_UsersInfo_CompanyID">
+            <End Role="CompanyID" EntitySet="CompanyID" />
+            <End Role="UsersInfo" EntitySet="UsersInfo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LmsDbMyHclModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CompanyID">
+          <Key>
+            <PropertyRef Name="CompanyID1" />
+          </Key>
+          <Property Name="CompanyID1" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContactName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContactTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RegionState" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductCompanies" Relationship="Self.FK_ProductCompany_CompanyID" FromRole="CompanyID" ToRole="ProductCompany" />
+          <NavigationProperty Name="UsersInfoes" Relationship="Self.FK_UsersInfo_CompanyID" FromRole="CompanyID" ToRole="UsersInfo" />
+        </EntityType>
+        <EntityType Name="EmployeeMyhcl">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Band" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ManagerID" Type="Int32" />
+          <Property Name="DateOfJoining" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Location" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TotalLeaves" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="LMS_Transactions">
+          <Key>
+            <PropertyRef Name="TnsactionID" />
+          </Key>
+          <Property Name="TnsactionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AppliedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LeaveType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmpID" Type="Int32" Nullable="false" />
+          <Property Name="LeaveOnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Count" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ProductCompany">
+          <Key>
+            <PropertyRef Name="ProductCompanyID" />
+          </Key>
+          <Property Name="ProductCompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="CompanyID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CompanyID1" Relationship="Self.FK_ProductCompany_CompanyID" FromRole="ProductCompany" ToRole="CompanyID" />
+          <NavigationProperty Name="ProductInfo" Relationship="Self.FK_ProductCompany_ProductInfo" FromRole="ProductCompany" ToRole="ProductInfo" />
+        </EntityType>
+        <EntityType Name="ProductInfo">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="QuantityPerUnit" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UnitPrice" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductCompanies" Relationship="Self.FK_ProductCompany_ProductInfo" FromRole="ProductInfo" ToRole="ProductCompany" />
+        </EntityType>
+        <EntityType Name="UsersInfo">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserEmailID" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CompanyID" Relationship="Self.FK_UsersInfo_CompanyID" FromRole="UsersInfo" ToRole="CompanyID" />
+        </EntityType>
+        <Association Name="FK_ProductCompany_CompanyID">
+          <End Role="CompanyID" Type="Self.CompanyID" Multiplicity="1" />
+          <End Role="ProductCompany" Type="Self.ProductCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyID">
+              <PropertyRef Name="CompanyID1" />
+            </Principal>
+            <Dependent Role="ProductCompany">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersInfo_CompanyID">
+          <End Role="CompanyID" Type="Self.CompanyID" Multiplicity="1" />
+          <End Role="UsersInfo" Type="Self.UsersInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyID">
+              <PropertyRef Name="CompanyID1" />
+            </Principal>
+            <Dependent Role="UsersInfo">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductCompany_ProductInfo">
+          <End Role="ProductInfo" Type="Self.ProductInfo" Multiplicity="1" />
+          <End Role="ProductCompany" Type="Self.ProductCompany" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductInfo">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="ProductCompany">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LmsDbMyHclEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CompanyIDs" EntityType="Self.CompanyID" />
+          <EntitySet Name="EmployeeMyhcls" EntityType="Self.EmployeeMyhcl" />
+          <EntitySet Name="LMS_Transactions" EntityType="Self.LMS_Transactions" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductCompanies" EntityType="Self.ProductCompany" />
+          <EntitySet Name="ProductInfoes" EntityType="Self.ProductInfo" />
+          <EntitySet Name="UsersInfoes" EntityType="Self.UsersInfo" />
+          <AssociationSet Name="FK_ProductCompany_CompanyID" Association="Self.FK_ProductCompany_CompanyID">
+            <End Role="CompanyID" EntitySet="CompanyIDs" />
+            <End Role="ProductCompany" EntitySet="ProductCompanies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersInfo_CompanyID" Association="Self.FK_UsersInfo_CompanyID">
+            <End Role="CompanyID" EntitySet="CompanyIDs" />
+            <End Role="UsersInfo" EntitySet="UsersInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCompany_ProductInfo" Association="Self.FK_ProductCompany_ProductInfo">
+            <End Role="ProductInfo" EntitySet="ProductInfoes" />
+            <End Role="ProductCompany" EntitySet="ProductCompanies" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LmsDbMyHclModelStoreContainer" CdmEntityContainer="LmsDbMyHclEntities">
+          <EntitySetMapping Name="CompanyIDs">
+            <EntityTypeMapping TypeName="LmsDbMyHclModel.CompanyID">
+              <MappingFragment StoreEntitySet="CompanyID">
+                <ScalarProperty Name="CompanyID1" ColumnName="CompanyID" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="ContactTitle" ColumnName="ContactTitle" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="RegionState" ColumnName="RegionState" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeMyhcls">
+            <EntityTypeMapping TypeName="LmsDbMyHclModel.EmployeeMyhcl">
+              <MappingFragment StoreEntitySet="EmployeeMyhcl">
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="EmpName" ColumnName="EmpName" />
+                <ScalarProperty Name="Band" ColumnName="Band" />
+                <ScalarProperty Name="ManagerID" ColumnName="ManagerID" />
+                <ScalarProperty Name="DateOfJoining" ColumnName="DateOfJoining" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="TotalLeaves" ColumnName="TotalLeaves" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LMS_Transactions">
+            <EntityTypeMapping TypeName="LmsDbMyHclModel.LMS_Transactions">
+              <MappingFragment StoreEntitySet="LMS_Transactions">
+                <ScalarProperty Name="TnsactionID" ColumnName="TnsactionID" />
+                <ScalarProperty Name="AppliedDate" ColumnName="AppliedDate" />
+                <ScalarProperty Name="LeaveType" ColumnName="LeaveType" />
+                <ScalarProperty Name="EmpID" ColumnName="EmpID" />
+                <ScalarProperty Name="LeaveOnDate" ColumnName="LeaveOnDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="LmsDbMyHclModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCompanies">
+            <EntityTypeMapping TypeName="LmsDbMyHclModel.ProductCompany">
+              <MappingFragment StoreEntitySet="ProductCompany">
+                <ScalarProperty Name="ProductCompanyID" ColumnName="ProductCompanyID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductInfoes">
+            <EntityTypeMapping TypeName="LmsDbMyHclModel.ProductInfo">
+              <MappingFragment StoreEntitySet="ProductInfo">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="QuantityPerUnit" ColumnName="QuantityPerUnit" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UsersInfoes">
+            <EntityTypeMapping TypeName="LmsDbMyHclModel.UsersInfo">
+              <MappingFragment StoreEntitySet="UsersInfo">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserEmailID" ColumnName="UserEmailID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

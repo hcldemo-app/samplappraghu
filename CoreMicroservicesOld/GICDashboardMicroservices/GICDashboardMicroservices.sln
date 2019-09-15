@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GICDashboardMicroservices", "GICDashboardMicroservices\GICDashboardMicroservices.csproj", "{5E395C8B-7F24-4B6A-A66E-18ECB4C1150C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E395C8B-7F24-4B6A-A66E-18ECB4C1150C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E395C8B-7F24-4B6A-A66E-18ECB4C1150C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E395C8B-7F24-4B6A-A66E-18ECB4C1150C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E395C8B-7F24-4B6A-A66E-18ECB4C1150C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {98C84C69-5747-4358-AEBB-DCD2D6F06F9B}
+	EndGlobalSection
+EndGlobal
